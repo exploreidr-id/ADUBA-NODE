@@ -1,0 +1,11 @@
+*.log
+*.db
+*.key
+*.pem
+.env
+bin/
+dist/
+
+# Local build artifacts
+node/aduba-node
+node/node

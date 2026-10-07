@@ -1,0 +1,36 @@
+services:
+  aduba-validator-1:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: ["-rpc", ":8080", "-data", "/data", "-node-id", "validator-1", "-peers", "http://aduba-validator-2:8080", "-block-interval", "10s"]
+    ports:
+      - "8080:8080"
+    volumes:
+      - aduba-validator-1:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/readyz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  aduba-validator-2:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: ["-rpc", ":8080", "-data", "/data", "-node-id", "validator-2", "-peers", "http://aduba-validator-1:8080"]
+    ports:
+      - "8081:8080"
+    volumes:
+      - aduba-validator-2:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/readyz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  aduba-validator-1:
+  aduba-validator-2:

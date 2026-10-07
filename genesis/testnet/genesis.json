@@ -1,0 +1,24 @@
+{
+  "genesis_time": "2026-10-07T00:00:00Z",
+  "chain_id": "aduba-testnet-1",
+  "protocol_version": 1,
+  "consensus": {
+    "type": "proof-of-stake",
+    "target_block_time_seconds": 5,
+    "unbonding_period_days": 21
+  },
+  "native_asset": {
+    "name": "ADUBA",
+    "symbol": "ADU",
+    "decimals": 18,
+    "max_supply": "1000000000000000000000000000",
+    "post_genesis_minting": false
+  },
+  "validators": [],
+  "allocations": [],
+  "features": {
+    "smart_contracts": false,
+    "ibc": false,
+    "public_rpc": false
+  }
+}
