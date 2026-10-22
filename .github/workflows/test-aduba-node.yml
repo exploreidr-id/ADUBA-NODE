@@ -1,0 +1,42 @@
+name: ADUBA-NODE Recovery Tests
+
+on:
+  push:
+    branches:
+      - recovery/v1.3-restored
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: node/go.mod
+          cache-dependency-path: node/go.mod
+
+      - name: Unit tests
+        working-directory: node
+        run: go test ./...
+
+      - name: Race tests
+        working-directory: node
+        run: go test -race ./...
+
+      - name: Static analysis
+        working-directory: node
+        run: go vet ./...
+
+      - name: Build
+        working-directory: node
+        run: go build -o aduba-node .
